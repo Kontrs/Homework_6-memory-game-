@@ -1,32 +1,93 @@
 body{
   margin: 0;
+  background-color: rgb(13, 54, 87);
+  font-family: 'Quicksand';
 }
-.memory-game{
-  background-image: url(/assets/images/background.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100vw;
-  height: 100vh;
+.start-game{
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+}
+.start-button{
+  display: flex;
+  font-size: 70px;
+  padding: 20px 40px;
+  border-radius: 20px;
+  border: 10px solid rgb(70, 14, 145);
+  background-color: rgb(254, 251, 172);
+  color: rgb(70, 14, 145);
+  cursor: pointer;
+}
+.memory-game{
+  max-width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.stat-tracker{
+  display: flex;
+  gap: 30px;
+}
+.move-counter{
+  font-size: 30px;
+  color: rgb(254, 251, 172);
+}
+.game-timer{
+  font-size: 30px;
+  color: rgb(254, 251, 172);
+}
+.win-counter{
+  font-size: 30px;
+  color: rgb(254, 251, 172);
 }
 .game-field{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 50px;
+  gap: 40px;
 }
-.card-row{
+.card-wrapper{
+  width: 1000px;
   display: flex;
+  flex-wrap: wrap;
   gap: 50px;
-
+  justify-content: center;
+  align-items: center;
 }
 .card{
-  width: 280px;
-  height: 400px;
+  width: 260px;
+  height: 380px;
   background-image: url(/assets/images/CardBack_The_Dark_Star_589x840.png);
   background-size: cover;
   aspect-ratio: 589 / 840;
+  cursor: pointer;
+}
+.end-game{
+  width: 700px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(254, 251, 172);
+  gap: 50px;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 40px 60px;
+  margin: auto;
+  margin-top: 100px;
+}
+.winner-text{
+  font-size: 40px;
+  color: rgb(70, 14, 145);
+}
+.play-again-button{
+  font-size: 70px;
+  padding: 20px 40px;
+  border-radius: 20px;
+  border: 10px solid rgb(70, 14, 145);
+  background-color: rgb(254, 251, 172);
+  color: rgb(70, 14, 145);
+  cursor: pointer;
 }

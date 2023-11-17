@@ -14,23 +14,30 @@
     <title>Memory game</title>
 </head>
 <body>
-   <div class="memory-game">
-        <div class="start-game"></div>
+    <div class="start-game">
+        <button class="start-button">Start game</button>
+    </div>
+    <div class="memory-game">
         <div class="game-field">
-            <div class="card-row">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+            <div class="stat-tracker">
+                <p class="move-counter">Moves: 0</p>
+                <p class="game-timer"> Time elapsed: 00:00</p>
+                <p class="win-counter">Wins: 0</p>
             </div>
-            <div class="card-row">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+            <div class="card-wrapper">
+                <div class="card" data-card-id="1"></div>
+                <div class="card" data-card-id="2"></div>
+                <div class="card" data-card-id="3"></div>
+                <div class="card" data-card-id="1"></div>
+                <div class="card" data-card-id="2"></div>
+                <div class="card" data-card-id="3"></div>
             </div>
         </div>
-        <div class="end-game"></div>
-   </div>
-
+    </div>
+    <div class="end-game">
+        <p class="winner-text">You won!</p>
+        <button class="play-again-button">Play again</button>
+    </div>
     <script src="/scripts.js"></script>
 </body>
 </html>
