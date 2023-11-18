@@ -12,10 +12,16 @@ const memoryGame = document.querySelector<HTMLDivElement>('.memory-game');//    
 const endGame = document.querySelector<HTMLDivElement>('.end-game');//  Get end game screen
 const startButton = document.querySelector<HTMLButtonElement>('.start-button');//   Get start button in start menu
 const playAgainButton = document.querySelector<HTMLButtonElement>('.play-again-button');//    Get play again button
+const moves = document.querySelector<HTMLParagraphElement>('.move-counter'); // movecounter html element
+const gameTimer = document.querySelector<HTMLParagraphElement>('.game-timer'); // html for timer
+const gameWinCount = document.querySelector<HTMLParagraphElement>('.win-counter');
 const cardArray = Array.from(document.querySelectorAll<HTMLElement>('.card')) as HTMLElement[];//   Get all of the cards in an array
 let matchCounter = 0;//   Initialize match counter variable
 let moveCounter = 0;//    Initialize move counter variable
+let timer: number; // timer variable
+let gameTimeInSeconds = 0; // second counter
 let currentSelectedCard = '';//    Initialize selected card variable
+let winCount = 0; // initial game win count
 
 // Image pair array, that assigns flipped card images to their respective cards
 
@@ -36,13 +42,23 @@ const initializeGame = (array: HTMLElement[]): void => {
   shuffledCardOrder.forEach((index, shuffledIndex) => {
     newArray[index].style.order = shuffledIndex.toString();
   });
+  //  clears the interval from previous game
+  clearInterval(timer);
+  // Start a new interval for the game timer
+  timer = window.setInterval(() => {
+    gameTimeInSeconds += 1;
+    gameTimer.innerHTML = `Time elapsed: ${gameTimeInSeconds} seconds`;
+  }, 1000);
 };
 
-//  function that displays the winning screen once the game is over
+//  function that displays the winning screen once the game is over, and updates win count
 
 const displayWinner = () => {
+  clearInterval(timer);
   endGame.style.display = 'flex';
   memoryGame.style.display = 'none';
+  winCount += 1;
+  gameWinCount.innerHTML = `Wins: ${winCount}`;
 };
 
 //  function that checks if a card has already been flipped/matched
@@ -80,7 +96,7 @@ const handleMatchingCards = (cardId: string) => {
 };
 
 // function that flips the cards back if a match has not been found
-// if 'matched' has not beed added after 2 cards have been flipped it starts timeout
+// if 'matched' has not been added after 2 cards have been flipped it starts timeout
 // to flip the cards back after 0.5s and remove 'flipped'
 const handleMismatchedCards = () => {
   setTimeout(() => {
@@ -94,9 +110,17 @@ const handleMismatchedCards = () => {
   }, 500);
 };
 
+// function responsible for card clicks
+
 const handleCardClick = (card: HTMLElement) => {
   if (isClickable(card)) {
     flipCard(card);
+    // statement that checks if one card is already selected or not,
+    // if not assigns card id to currentSelectedCard
+    // if one is already selected creates a constant for 2nd card to get its id
+    // then if the ids of 2 cards are equal calls, handleMatchingCards()
+    // or handleMismatchedCards()
+    // in the end sets currentSelectedCard back to empty and increments moveCounter
     if (currentSelectedCard === '') {
       currentSelectedCard = card.dataset.cardId || '';
     } else {
@@ -108,24 +132,29 @@ const handleCardClick = (card: HTMLElement) => {
       }
       currentSelectedCard = '';
       moveCounter += 1;
+      moves.innerHTML = `Moves: ${moveCounter}`;
     }
   }
 };
 
 //  resetgame function that sets match, move, card counters back to initial value,
 // removes card classes for matches and flips, shuffles the cards again with initializeGame function
+// sets seconds back to 0 and updates text content
 
 const resetGame = () => {
-  matchCounter = 0;
-  moveCounter = 0;
-  currentSelectedCard = '';
-
-  cardArray.forEach((card) => {
+  cardArray.forEach((card: HTMLElement) => {
     const cardBack = card;
     card.classList.remove('flipped', 'matched');
     cardBack.style.backgroundImage = '';
   });
   initializeGame(cardArray);
+
+  matchCounter = 0;
+  currentSelectedCard = '';
+  moveCounter = 0;
+  moves.innerHTML = `Moves: ${moveCounter}`;
+  gameTimeInSeconds = 0;
+  gameTimer.innerHTML = `Time elapsed: ${gameTimeInSeconds} seconds`;
 };
 
 //    Event that switches from game start menu to game field and initializes the game
@@ -138,7 +167,7 @@ startButton.addEventListener('click', () => {
 
 // Allows each card to be clicked
 
-cardArray.forEach((card) => {
+cardArray.forEach((card: HTMLElement) => {
   card.addEventListener('click', () => handleCardClick(card));
 });
 
